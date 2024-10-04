@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { createSubscription } from "@reflowhq/auth-next/client";
 
-export default ({ plans }: { plans: Plan[] }) => {
+const PricingTable = ({ plans }: { plans: Plan[] }) => {
   const router = useRouter();
 
   return (
@@ -52,6 +52,8 @@ export default ({ plans }: { plans: Plan[] }) => {
     </div>
   );
 };
+
+export default PricingTable;
 
 interface Plan {
   id: number;

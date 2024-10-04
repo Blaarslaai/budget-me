@@ -3,7 +3,7 @@
 import { signOut } from "@reflowhq/auth-next/client";
 import { useRouter } from "next/navigation";
 
-export default function () {
+export default function LogoutButton() {
   const router = useRouter();
 
   return (

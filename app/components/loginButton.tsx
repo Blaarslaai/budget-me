@@ -3,7 +3,7 @@
 import { signIn } from "@reflowhq/auth-next/client";
 import { useRouter } from "next/navigation";
 
-export default function () {
+export default function LoginButton() {
   const router = useRouter();
 
   return (

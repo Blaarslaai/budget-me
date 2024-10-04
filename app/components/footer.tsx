@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  faChrome,
-  faFacebook,
-  faLinkedin,
-} from "@fortawesome/free-brands-svg-icons";
+import { faChrome, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faComputer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

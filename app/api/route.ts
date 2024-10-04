@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { refreshUserCookie, updateUser } from "../serverFunction";
+import { updateUser } from "../serverFunction";
 
 export async function POST(req: NextRequest) {
   try {
