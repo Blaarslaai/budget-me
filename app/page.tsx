@@ -94,8 +94,8 @@ export default async function Home() {
             <section className="flex flex-col items-center gap-y-4">
               <h3 className="text-xl font-semibold">Guarded Actions</h3>
               <p className="max-w-md text-center text-gray-700">
-                Depending on the user's auth and subscription status, only some
-                of the buttons will be available.
+                Depending on the user&lsquo;s auth and subscription status, only
+                some of the buttons will be available.
               </p>
 
               <div className="flex max-w-lg flex-wrap justify-center gap-4">

@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "@reflowhq/auth-next/types";
-import { refreshUserCookie, updateUser } from "@/app/serverFunction";
+import { refreshUserCookie } from "@/app/serverFunction";
 import { useState } from "react";
 import Loader from "@/app/components/loader";
 
@@ -31,6 +31,8 @@ export default function ProfileForm({ user }: Props) {
     await refreshUserCookie();
 
     setIsLoading(false);
+
+    console.log(response);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
