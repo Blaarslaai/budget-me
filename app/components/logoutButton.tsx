@@ -7,11 +7,8 @@ export default function LogoutButton() {
   const router = useRouter();
 
   return (
-    <button
-      onClick={() => signOut({ onSuccess: () => router.refresh() })}
-      className="ml-2 rounded border border-red-500 px-2 py-1 text-sm text-red-500 hover:text-red-600"
-    >
+    <a onClick={() => signOut({ onSuccess: () => router.refresh() })}>
       Sign Out
-    </button>
+    </a>
   );
 }

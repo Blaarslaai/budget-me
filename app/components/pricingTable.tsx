@@ -7,7 +7,7 @@ const PricingTable = ({ plans }: { plans: Plan[] }) => {
   const router = useRouter();
 
   return (
-    <div className="container mx-auto mt-8 max-w-xl px-6">
+    <div className="container mx-auto mt-8 max-w-4xl px-6">
       <div className="flex flex-col justify-center gap-6 md:flex-row">
         {plans.map((plan) => (
           <div
