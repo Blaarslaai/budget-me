@@ -3,6 +3,7 @@
 import getAuth from "@/auth";
 import { sql } from "@vercel/postgres";
 import { Resend } from "resend";
+import { InviteEmailTemplate } from "./emails/invite";
 
 const auth = getAuth();
 
@@ -11,9 +12,9 @@ export async function SendEmail(email: string) {
 
   const { data } = await resend.emails.send({
     from: "Budget Me+ <info@budgetme.co.za>",
-    to: ["valdez.pretorius@gmail.com"],
-    subject: "Hello World",
-    html: `<strong>Email: ${email}</strong>`,
+    to: [email],
+    subject: "Your Account is Waiting",
+    react: InviteEmailTemplate(email),
   });
 
   return data;

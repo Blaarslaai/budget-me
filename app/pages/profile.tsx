@@ -111,25 +111,36 @@ export default function Profile({ user, subscription }: Props) {
       </div>
 
       {subscription && (
-        <>
-          <UnsubscribeButton /> {" from "} {subscription?.plan.name}
-        </>
+        <div className="flex w-1/2 items-center">
+          <UnsubscribeButton />
+          <span className="px-1">from</span>
+          <span>{subscription?.plan.name}</span>
+        </div>
       )}
 
-      {subscription?.plan.parameters.access_level == "plus" && (
-        <>
-          <div>You're on the Family package</div>
+      <br />
+      <br />
+
+      {subscription?.plan.parameters.access_level == "family" && (
+        <div className="w-1/2">
+          <div className="pr-1">
+            You're on the Family package. Invite a second user below.
+          </div>
 
           <form onSubmit={handleInvite}>
-            <label className="input input-bordered flex items-center gap-2">
-              Email
-              <input type="text" name="email" className="grow" />
-            </label>
+            <div className="label">
+              <span className="label-text">Email</span>
+            </div>
+            <input
+              type="text"
+              name="email"
+              className="input input-bordered w-full max-w-xs mr-5"
+            />
             <button className="btn btn-primary" type="submit">
               Invite User
             </button>
           </form>
-        </>
+        </div>
       )}
     </>
   );

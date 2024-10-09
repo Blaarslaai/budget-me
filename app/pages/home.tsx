@@ -1,7 +1,6 @@
 "use client";
 
 import PricingTable from "@/app/components/pricingTable";
-import GuardButton from "@/app/components/guardButton";
 import { User, Subscription } from "@reflowhq/auth-next/types";
 import { useEffect, useState } from "react";
 
@@ -24,7 +23,7 @@ export default function Home({ user, subscription }: props) {
       const requestUrl = `${apiURL}/projects/${process.env.NEXT_PUBLIC_REFLOW_PROJECT_ID}/plans/`;
 
       const response = await fetch(requestUrl, {
-        cache: "force-cache",
+        cache: "reload",
       });
 
       const plansData = await (await response.json()).data;
@@ -41,7 +40,7 @@ export default function Home({ user, subscription }: props) {
       {user ? (
         <div className="hero bg-base-200">
           <div className="hero-content text-center">
-            <div className="max-w-lg">
+            <div className="max-w-3xl">
               <h1 className="text-5xl font-bold">
                 Welcome to your Dashboard
                 <br />
