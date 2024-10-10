@@ -10,30 +10,30 @@ type props = {
 };
 
 export default function Home({ user, subscription }: props) {
-  const [plans, setPlans] = useState([] as any[]);
+  // const [plans, setPlans] = useState([] as any[]);
 
-  useEffect(() => {
-    const getPlans = async () => {
-      const apiURL = process.env.NEXT_PUBLIC_REFLOW_TEST_MODE
-        ? "https://test-api.reflowhq.com/v2"
-        : "https://api.reflowhq.com/v2";
+  // useEffect(() => {
+  //   const getPlans = async () => {
+  //     const apiURL = process.env.NEXT_PUBLIC_REFLOW_TEST_MODE
+  //       ? "https://test-api.reflowhq.com/v2"
+  //       : "https://api.reflowhq.com/v2";
 
-      console.log(apiURL);
+  //     console.log(apiURL);
 
-      const requestUrl = `${apiURL}/projects/${process.env.NEXT_PUBLIC_REFLOW_PROJECT_ID}/plans/`;
+  //     const requestUrl = `${apiURL}/projects/${process.env.NEXT_PUBLIC_REFLOW_PROJECT_ID}/plans/`;
 
-      const response = await fetch(requestUrl, {
-        cache: "reload",
-      });
+  //     const response = await fetch(requestUrl, {
+  //       cache: "reload",
+  //     });
 
-      const plansData = await (await response.json()).data;
-      setPlans(plansData);
+  //     const plansData = await (await response.json()).data;
+  //     setPlans(plansData);
 
-      console.log(plansData);
-    };
+  //     console.log(plansData);
+  //   };
 
-    getPlans();
-  }, [user]);
+  //   getPlans();
+  // }, [user]);
 
   return (
     <>
