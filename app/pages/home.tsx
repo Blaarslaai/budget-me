@@ -1,6 +1,6 @@
 "use client";
 
-import PricingTable from "@/app/components/pricingTable";
+// import PricingTable from "@/app/components/pricingTable";
 import { User, Subscription } from "@reflowhq/auth-next/types";
 import { useEffect, useState } from "react";
 
@@ -78,7 +78,7 @@ export default function Home({ user, subscription }: props) {
               Select one of the plans and start a subscription.
             </p>
 
-            <PricingTable plans={plans} />
+            {/* <PricingTable plans={plans} /> */}
           </section>
         </>
       )}
