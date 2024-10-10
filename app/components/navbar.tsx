@@ -4,6 +4,7 @@ import { Subscription, User } from "@reflowhq/auth-next/types";
 import avatar from "../assets/avatar.png";
 import LoginButton from "./loginButton";
 import LogoutButton from "./logoutButton";
+import Image from "next/image";
 
 type props = {
   user: User | null;
@@ -30,7 +31,7 @@ export default function Navbar({ user, subscription, setActivePage }: props) {
             className="btn btn-ghost btn-circle avatar"
           >
             <div className="w-10 rounded-full">
-              <img alt="Avatar" src={user ? user.photo : avatar.src} />
+              <Image alt="Avatar" src={user ? user.photo : avatar.src} />
             </div>
           </div>
           {user && (

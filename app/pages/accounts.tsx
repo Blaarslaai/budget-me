@@ -150,10 +150,10 @@ export default function Accounts() {
                   <button
                     className="btn btn-xs"
                     onClick={() => {
-                      setAccountToDelete(account.id),
-                        (
-                          document.getElementById("deleteModal") as any
-                        ).showModal();
+                      setAccountToDelete(account.id);
+                      (
+                        document.getElementById("deleteModal") as any
+                      ).showModal();
                     }}
                   >
                     Delete

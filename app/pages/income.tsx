@@ -100,7 +100,9 @@ export default function Income() {
                   name="account"
                 >
                   {accounts.map((account: any) => (
-                    <option value={account.id}>{account.name}</option>
+                    <option key={account.id} value={account.id}>
+                      {account.name}
+                    </option>
                   ))}
                 </select>
               </label>
@@ -163,7 +165,7 @@ export default function Income() {
           </thead>
           <tbody>
             {income.map((source: any, index: number) => (
-              <tr>
+              <tr key={index}>
                 <td>{index + 1}</td>
                 <td>
                   {

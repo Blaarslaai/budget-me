@@ -79,8 +79,6 @@ export async function GetSettings() {
 }
 
 export async function GetCategories() {
-  const user = await auth.user();
-
   const { rows } = await sql`
         SELECT * FROM categories;
       `;

@@ -2,10 +2,11 @@
 
 import { Subscription, User } from "@reflowhq/auth-next/types";
 import { refreshUserCookie } from "@/app/serverFunction";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Loader from "@/app/components/loader";
 import { SendEmail } from "../serverCRUDActions";
 import UnsubscribeButton from "../components/unsubscribeButton";
+import Image from "next/image";
 
 type Props = {
   user: User | null;
@@ -67,7 +68,7 @@ export default function Profile({ user, subscription }: Props) {
         <div className="collapse-content">
           <form onSubmit={handleSubmit}>
             <div className="w-52 rounded-full mb-5">
-              <img alt="Avatar" src={user?.photo} />
+              <Image alt="Avatar" src={user?.photo || ""} />
             </div>
             <label className="form-control w-full max-w-xs">
               <div className="label">
@@ -124,7 +125,7 @@ export default function Profile({ user, subscription }: Props) {
       {subscription?.plan.parameters.access_level == "family" && (
         <div className="w-1/2">
           <div className="pr-1">
-            You're on the Family package. Invite a second user below.
+            You&apos;re on the Family package. Invite a second user below.
           </div>
 
           <form onSubmit={handleInvite}>

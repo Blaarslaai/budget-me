@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Footer from "./footer";
 import Navbar from "./navbar";
 import { Subscription, User } from "@reflowhq/auth-next/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Home from "../pages/home";
 import Accounts from "../pages/accounts";
 import Income from "../pages/income";
