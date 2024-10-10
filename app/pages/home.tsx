@@ -2,7 +2,7 @@
 
 // import PricingTable from "@/app/components/pricingTable";
 import { User, Subscription } from "@reflowhq/auth-next/types";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 type props = {
   user: User | null;
