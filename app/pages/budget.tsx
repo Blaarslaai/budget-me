@@ -209,8 +209,8 @@ export default function Budget() {
       </div>
 
       <div className="flex justify-start">
-        {accounts.map((account: any) => (
-          <label className="form-control w-full max-w-xs">
+        {accounts.map((account: any, index: number) => (
+          <label className="form-control w-full max-w-xs" key={index}>
             <div className="label">
               <span className="label-text">{account.name} Current Balance</span>
             </div>
