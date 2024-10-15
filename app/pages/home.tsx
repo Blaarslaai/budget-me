@@ -1,8 +1,12 @@
 "use client";
 
-// import PricingTable from "@/app/components/pricingTable";
+import PricingTable from "@/app/components/pricingTable";
+import { faRankingStar, faStarHalf } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { User, Subscription } from "@reflowhq/auth-next/types";
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { GetAccounts, GetSubscriptionPlans } from "../serverCRUDActions";
+import Loader from "../components/loader";
 
 type props = {
   user: User | null;
@@ -10,42 +14,78 @@ type props = {
 };
 
 export default function Home({ user, subscription }: props) {
-  // const [plans, setPlans] = useState([] as any[]);
+  const [plans, setPlans] = useState([] as any[]);
+  const [accounts, setAccounts] = useState([] as any);
+  const [isLoading, setIsLoading] = useState(false);
+  const [netWorth, setNetWorth] = useState(0.0);
 
-  // useEffect(() => {
-  //   const getPlans = async () => {
-  //     const apiURL = process.env.NEXT_PUBLIC_REFLOW_TEST_MODE
-  //       ? "https://test-api.reflowhq.com/v2"
-  //       : "https://api.reflowhq.com/v2";
+  useEffect(() => {
+    setIsLoading(true);
 
-  //     console.log(apiURL);
+    const getPlans = async () => {
+      const plansData = await GetSubscriptionPlans();
+      setPlans(plansData);
+    };
 
-  //     const requestUrl = `${apiURL}/projects/${process.env.NEXT_PUBLIC_REFLOW_PROJECT_ID}/plans/`;
+    getPlans();
+    getAccounts();
 
-  //     const response = await fetch(requestUrl, {
-  //       cache: "reload",
-  //     });
+    setIsLoading(false);
+  }, [user]);
 
-  //     const plansData = await (await response.json()).data;
-  //     setPlans(plansData);
+  useEffect(() => {
+    if (accounts.length > 0) {
+      const netWorth = accounts.reduce((accumulator: number, account: any) => {
+        const balance = Number(account.balance);
 
-  //     console.log(plansData);
-  //   };
+        if (account.type === "Credit") {
+          accumulator -= balance;
+        } else if (account.type === "Debit") {
+          accumulator += balance;
+        }
 
-  //   getPlans();
-  // }, [user]);
+        return accumulator;
+      }, 0);
+
+      console.log(netWorth);
+
+      setNetWorth(netWorth);
+    }
+  }, [accounts]);
+
+  const getAccounts = async () => {
+    setIsLoading(true);
+    const accounts = await GetAccounts();
+
+    setAccounts(accounts);
+    setIsLoading(false);
+  };
+
+  if (isLoading)
+    return (
+      <>
+        <div className="flex justify-center">
+          <Loader />
+        </div>
+      </>
+    );
 
   return (
     <>
       {user ? (
-        <div className="hero bg-base-200">
+        <div className="hero">
           <div className="hero-content text-center">
             <div className="max-w-3xl">
-              <h1 className="text-5xl font-bold">
+              <h1
+                className="text-5xl font-bold"
+                style={{ color: "rgba(51, 51, 51, 1)" }}
+              >
                 Welcome to your Dashboard
                 <br />
                 <br />
-                {user.name}
+                <span style={{ color: "rgba(200, 92, 60, 1)" }}>
+                  {user.name}
+                </span>
               </h1>
               <p className="py-6">
                 Please use the menu to your left to navigate through the Budget
@@ -78,7 +118,52 @@ export default function Home({ user, subscription }: props) {
               Select one of the plans and start a subscription.
             </p>
 
-            {/* <PricingTable plans={plans} /> */}
+            <PricingTable plans={plans} />
+          </section>
+        </>
+      )}
+
+      {subscription && (
+        <>
+          <section className="flex flex-col items-center gap-y-4">
+            <h3 className="text-xl font-semibold">Your Financial Outlook</h3>
+            <p className="max-w-lg text-center text-gray-700">
+              {netWorth < 0 ? "Hang in there!" : "You are looking good!"}
+            </p>
+
+            {netWorth < 0 ? (
+              <FontAwesomeIcon
+                icon={faStarHalf}
+                size="5x"
+                style={{ color: "rgba(200, 92, 60, 1)" }}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faRankingStar}
+                size="5x"
+                style={{ color: "rgba(200, 92, 60, 1)" }}
+              />
+            )}
+
+            <div>
+              Your{" "}
+              <div className="lg:tooltip" data-tip="All Debits minus Credit">
+                <span
+                  className="underline"
+                  style={{ color: "rgba(200, 92, 60, 1)" }}
+                >
+                  Current
+                </span>
+              </div>{" "}
+              NET Worth is: <strong>R</strong>{" "}
+              <strong
+                className={`${
+                  netWorth > 0 ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {netWorth}
+              </strong>
+            </div>
           </section>
         </>
       )}

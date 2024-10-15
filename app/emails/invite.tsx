@@ -1,17 +1,15 @@
-import Image from "next/image";
-import icon from "../assets/dollar.png";
+import logo from "../assets/dollar.png";
 
 export function InviteEmailTemplate(email: string): import("react").ReactNode {
   return (
     <html>
       <div className="flex justify-center">
-        <Image
-          src={icon.src}
+        <img
+          src={logo.src}
+          width="100"
+          height="100"
+          className="block max-w-full"
           alt="Logo"
-          title="Logo"
-          className="block"
-          width="200"
-          height="200"
         />
       </div>
       <p>Hello {email}</p>

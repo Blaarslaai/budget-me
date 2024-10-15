@@ -53,32 +53,43 @@ export default function Categories() {
   }, []);
   return (
     <>
-      <h1 className="text-3xl font-bold leading-7 text-gray-900">
-        Budgeting Categories
-      </h1>
+      <div className="w-full flex justify-center p-10 rounded-md">
+        <h1 className="text-3xl font-bold leading-7 text-gray-900">
+          Budgeting Categories
+        </h1>
+      </div>
 
-      <h2 className="text-xl font-bold leading-7 text-gray-900">
-        Create Custom Categories
-      </h2>
-      <form ref={formRef} action={create} className="pt-10">
-        <div className="flex">
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">Category Name</span>
-            </div>
-            <input
-              type="text"
-              name="name"
-              placeholder="Type here"
-              className="input input-bordered w-full max-w-xs"
-            />
-          </label>
+      <div className="collapse collapse-arrow bg-accent">
+        <input type="checkbox" />
+        <div className="collapse-title text-xl font-medium">
+          Add Custom Category
         </div>
+        <div className="collapse-content">
+          <form ref={formRef} action={create}>
+            <div className="flex space-x-5">
+              <div className="flex gap-5">
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text">Category Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Type here"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+              </div>
 
-        <button type="submit" className="btn btn-primary btn-sm mt-5">
-          Submit
-        </button>
-      </form>
+              <div className="flex flex-col justify-end">
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
 
       {isLoading ? (
         <Loader />

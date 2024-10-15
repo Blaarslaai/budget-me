@@ -20,6 +20,22 @@ export async function SendEmail(email: string) {
   return data;
 }
 
+export async function GetSubscriptionPlans() {
+  const apiURL = process.env.REFLOW_TEST_MODE
+    ? "https://test-api.reflowhq.com/v2"
+    : "https://api.reflowhq.com/v2";
+
+  const requestUrl = `${apiURL}/projects/${process.env.REFLOW_PROJECT_ID}/plans/`;
+
+  const response = await fetch(requestUrl, {
+    cache: "reload",
+  });
+
+  return await (
+    await response.json()
+  ).data;
+}
+
 export async function CreateAccount(
   accountName: string,
   accountType: string,
@@ -48,34 +64,6 @@ export async function DeleteAccount(id: number) {
   await sql`
         DELETE FROM accounts WHERE id = ${id};
       `;
-}
-
-export async function CreateSetting(currency: string) {
-  const user = await auth.user();
-
-  const settings = await GetSettings();
-  if (settings.length > 0) {
-    await sql`
-        UPDATE settings
-        SET currency = ${currency}
-        WHERE email = ${user?.email};
-      `;
-  } else {
-    await sql`
-        INSERT INTO settings (email, currency)
-        VALUES (${user?.email}, ${currency});
-      `;
-  }
-}
-
-export async function GetSettings() {
-  const user = await auth.user();
-
-  const { rows } = await sql`
-        SELECT * FROM settings WHERE email = ${user?.email} LIMIT 1;
-      `;
-
-  return rows;
 }
 
 export async function GetCategories() {
@@ -123,6 +111,12 @@ export async function CreateIncomeSource(
         INSERT INTO income (accountid, incomeSource, description, amount, email)
         VALUES (${accountId}, ${incomeSource}, ${description}, ${amount}, ${user?.email});
       `;
+
+  await sql`
+        UPDATE accounts
+        SET balance = balance + ${amount}
+        WHERE id = ${accountId};
+      `;
 }
 
 export async function GetIncomeSources() {
@@ -138,5 +132,112 @@ export async function GetIncomeSources() {
 export async function DeleteIncomeSource(id: number) {
   await sql`
         DELETE FROM income WHERE id = ${id};
+      `;
+}
+
+export async function CreateFamilyUser(email: string) {
+  const user = await auth.user();
+
+  await sql`
+        INSERT INTO familyUsers (invitedEmail, primaryUserEmail)
+        VALUES (${email}, ${user?.email});
+      `;
+}
+
+export async function GetFamilyUsers() {
+  const user = await auth.user();
+
+  const { rows } = await sql`
+        SELECT * FROM familyUsers WHERE primaryUserEmail = ${user?.email};
+      `;
+
+  return rows;
+}
+
+export async function ActivateFamilyUser() {
+  const user = await auth.user();
+
+  await sql`
+        UPDATE familyUsers
+        SET active = TRUE, pending = FALSE
+        WHERE invitedEmail = ${user?.email}
+        AND active = FALSE
+        AND pending = TRUE;
+      `;
+}
+
+export async function DeactivateFamilyUser(id: number) {
+  await sql`
+        UPDATE familyUsers
+        SET active = FALSE, pending = FALSE
+        WHERE id = ${id};
+      `;
+}
+
+export async function IsFamilyUser() {
+  const user = await auth.user();
+
+  const { rows } = await sql`
+        SELECT *
+        FROM familyUsers
+        WHERE invitedEmail = ${user?.email}
+        AND active = TRUE
+        AND pending = FALSE;
+      `;
+
+  return rows;
+}
+
+export async function CreateBudgetSource(
+  accountId: number,
+  incomeSource: string,
+  description: string,
+  amount: number,
+  date: Date
+) {
+  const user = await auth.user();
+
+  await sql`
+        INSERT INTO budget (accountid, incomeSource, description, amount, email, date)
+        VALUES (${accountId}, ${incomeSource}, ${description}, ${amount}, ${
+    user?.email
+  }, ${(date as Date).toLocaleString("en-ZA", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })}
+        );
+      `;
+
+  await sql`
+        UPDATE accounts
+        SET balance = balance - ${amount}
+        WHERE id = ${accountId};
+      `;
+}
+
+export async function GetBudgetSources() {
+  const user = await auth.user();
+
+  const { rows } = await sql`
+        SELECT * FROM budget WHERE email = ${user?.email};
+      `;
+
+  return rows;
+}
+
+export async function DeleteBudgetSource(
+  id: number,
+  amount: number,
+  accountId: number
+) {
+  console.log(id, amount, accountId);
+
+  await sql`DELETE FROM budget WHERE id = ${id};`;
+
+  await sql`
+        UPDATE accounts
+        SET balance = balance + ${amount}
+        WHERE id = ${accountId};
       `;
 }

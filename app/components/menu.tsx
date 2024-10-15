@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  faArrowLeft,
+  faArrowRight,
   faChartLine,
   faDotCircle,
   faFile,
@@ -18,7 +20,6 @@ import Accounts from "../pages/accounts";
 import Income from "../pages/income";
 import Budget from "../pages/budget";
 import Categories from "../pages/categories";
-import Settings from "../pages/settings";
 import Profile from "../pages/profile";
 import Reporting from "../pages/reporting";
 import GuardButton from "./guardButton";
@@ -50,76 +51,125 @@ export default function Menu({ user, subscription }: props) {
             isCollapsed ? "w-20" : "w-64"
           }`}
         >
-          <ul className="menu bg-gray-100 rounded-box flex-1 pt-24 flex flex-col transition-all duration-300">
+          <ul
+            className="menu rounded-box flex-1 pt-24 flex flex-col transition-all duration-300"
+            style={{ backgroundColor: "rgba(250, 243, 224, 1)" }}
+          >
             <li>
               <button
                 onClick={toggleMenu}
-                className="p-2 bg-gray-200 rounded-md mb-2"
+                className="p-2 rounded-md mb-2 flex justify-end hover:bg-gray-100 focus:bg-gray-100"
               >
-                {isCollapsed ? "Expand" : "Collapse"}
+                {isCollapsed ? (
+                  <FontAwesomeIcon icon={faArrowRight} />
+                ) : (
+                  <FontAwesomeIcon icon={faArrowLeft} />
+                )}
               </button>
             </li>
-            <li>
+            <li
+              className={`bg-teal-50 rounded-md mb-2 flex flex-col w-full focus:bg-teal-50 hover:bg-teal-50 ${
+                isCollapsed && "content-center"
+              }`}
+              style={{ color: "rgba(51, 51, 51, 1)" }}
+            >
               <GuardButton
                 condition={true}
                 customFunction={setActivePage}
                 customParameter="HOME"
-                className=""
+                className={`${
+                  activePage === "HOME" && "bg-teal-50"
+                } focus:bg-teal-50`}
               >
                 <FontAwesomeIcon icon={faHome} />
                 {!isCollapsed && "Home"}
               </GuardButton>
             </li>
-            <li>
+            <li
+              className={`bg-teal-50 rounded-md mb-2 flex flex-col w-full focus:bg-teal-50 hover:bg-teal-50 ${
+                isCollapsed && "content-center"
+              }`}
+              style={{ color: "rgba(51, 51, 51, 1)" }}
+            >
               <GuardButton
                 condition={!!user}
                 customFunction={setActivePage}
                 customParameter="ACCOUNTS"
-                className=""
+                className={`${
+                  activePage === "ACCOUNTS" && "bg-teal-50"
+                } focus:bg-teal-50`}
               >
                 <FontAwesomeIcon icon={faFolder} />
                 {!isCollapsed && "Accounts"}
               </GuardButton>
             </li>
-            <li>
+            <li
+              className={`bg-teal-50 rounded-md mb-2 flex flex-col w-full focus:bg-teal-50 hover:bg-teal-50 ${
+                isCollapsed && "content-center"
+              }`}
+              style={{ color: "rgba(51, 51, 51, 1)" }}
+            >
               <GuardButton
                 condition={!!user}
                 customFunction={setActivePage}
                 customParameter="INCOME"
-                className=""
+                className={`${
+                  activePage === "INCOME" && "bg-teal-50"
+                } focus:bg-teal-50`}
               >
                 <FontAwesomeIcon icon={faMoneyBill} />
                 {!isCollapsed && "Income Source"}
               </GuardButton>
             </li>
-            <li>
+            <li
+              className={`bg-teal-50 rounded-md mb-2 flex flex-col w-full focus:bg-teal-50 hover:bg-teal-50 ${
+                isCollapsed && "content-center"
+              }`}
+              style={{ color: "rgba(51, 51, 51, 1)" }}
+            >
               <GuardButton
                 condition={!!user}
                 customFunction={setActivePage}
                 customParameter="BUDGET"
-                className=""
+                className={`${
+                  activePage === "BUDGET" && "bg-teal-50"
+                } focus:bg-teal-50`}
               >
                 <FontAwesomeIcon icon={faChartLine} />
                 {!isCollapsed && "Budget"}
               </GuardButton>
             </li>
-            <li>
+            <li
+              className={`bg-teal-50 rounded-md mb-2 flex flex-col w-full focus:bg-teal-50 hover:bg-teal-50 ${
+                isCollapsed && "content-center"
+              }`}
+              style={{ color: "rgba(51, 51, 51, 1)" }}
+            >
               <GuardButton
                 condition={!!user}
                 customFunction={setActivePage}
                 customParameter="CATEGORIES"
-                className=""
+                className={`${
+                  activePage === "CATEGORIES" && "bg-teal-50"
+                } focus:bg-teal-50`}
               >
                 <FontAwesomeIcon icon={faDotCircle} />
                 {!isCollapsed && "Budgeting Categories"}
               </GuardButton>
             </li>
-            <li className="mt-auto pb-16">
+            <li
+              className={`bg-teal-50 mt-auto mb-16 rounded-md flex flex-col focus:bg-teal-50 hover:bg-teal-50 ${
+                isCollapsed && "content-center"
+              }`}
+              style={{ color: "rgba(51, 51, 51, 1)" }}
+            >
               <GuardButton
                 condition={!!user}
                 customFunction={setActivePage}
                 customParameter="REPORTING"
-                className=""
+                className={`${
+                  activePage === "REPORTING" && "bg-teal-50"
+                } focus:bg-teal-50`}
               >
                 <FontAwesomeIcon icon={faFile} />
                 {!isCollapsed && "Reporting"}
@@ -131,7 +181,7 @@ export default function Menu({ user, subscription }: props) {
         <div
           className={`flex-auto ${
             isCollapsed ? "ml-20" : "ml-64"
-          } bg-white px-4 py-10 transition-all duration-300`}
+          } px-4 py-10 transition-all duration-300 bg-white`}
         >
           <div className="flex flex-col gap-y-12">
             {activePage === "HOME" ? (
@@ -144,8 +194,6 @@ export default function Menu({ user, subscription }: props) {
               <Budget />
             ) : activePage === "CATEGORIES" ? (
               <Categories />
-            ) : activePage === "SETTINGS" ? (
-              <Settings />
             ) : activePage === "PROFILE" ? (
               <Profile user={user} subscription={subscription} />
             ) : activePage === "REPORTING" ? (

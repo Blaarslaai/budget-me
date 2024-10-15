@@ -60,54 +60,60 @@ export default function Accounts() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold leading-7 text-gray-900">Accounts</h1>
+      <div className="w-full flex justify-center p-10 rounded-md">
+        <h1 className="text-3xl font-bold leading-7 text-gray-900">Accounts</h1>
+      </div>
 
-      <div className="collapse collapse-arrow bg-base-200">
+      <div className="collapse collapse-arrow bg-accent">
         <input type="checkbox" />
         <div className="collapse-title text-xl font-medium">Add Account</div>
         <div className="collapse-content">
           <form ref={formRef} action={create}>
-            <div className="flex gap-5">
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="label-text">Account Name</span>
-                </div>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Type here"
-                  className="input input-bordered w-full max-w-xs"
-                />
-              </label>
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="label-text">Account Type</span>
-                </div>
-                <select
-                  className="select select-bordered w-full max-w-xs"
-                  name="type"
-                >
-                  <option>Credit</option>
-                  <option>Debit</option>
-                </select>
-              </label>
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="label-text">Starting Balance</span>
-                </div>
-                <input
-                  type="number"
-                  name="balance"
-                  defaultValue="0.00"
-                  step="0.01"
-                  className="input input-bordered w-full max-w-xs"
-                />
-              </label>
-            </div>
+            <div className="flex space-x-5">
+              <div className="flex gap-5">
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text">Account Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Type here"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text">Account Type</span>
+                  </div>
+                  <select
+                    className="select select-bordered w-full max-w-xs"
+                    name="type"
+                  >
+                    <option>Credit</option>
+                    <option>Debit</option>
+                  </select>
+                </label>
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text">Starting Balance</span>
+                  </div>
+                  <input
+                    type="number"
+                    name="balance"
+                    defaultValue="0.00"
+                    step="0.01"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+              </div>
 
-            <button type="submit" className="btn btn-primary mt-5">
-              Submit
-            </button>
+              <div className="flex flex-col justify-end">
+                <button type="submit" className="btn btn-primary mt-5">
+                  Submit
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -143,7 +149,7 @@ export default function Accounts() {
                     ? "-"
                     : account.type === "Debit" && account.balance < 0.0
                     ? "-"
-                    : null}
+                    : ""}
                   {account.balance}
                 </td>
                 <td>

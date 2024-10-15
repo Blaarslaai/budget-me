@@ -9,9 +9,9 @@ export default function UnsubscribeButton() {
   return (
     <button
       onClick={() => modifySubscription({ onSuccess: () => router.refresh() })}
-      className="btn btn-error"
+      className="text-red-500 underline"
     >
-      Unsubscribe
+      <strong>Unsubscribe</strong>
     </button>
   );
 }

@@ -6,7 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Footer() {
   return (
-    <footer className="footer bg-neutral text-neutral-content items-center p-4 sticky bottom-0 z-50">
+    <footer
+      className="footer text-gray-900 items-center p-4 sticky bottom-0 z-50"
+      style={{ backgroundColor: "rgba(217, 203, 160, 1)" }}
+    >
       <aside className="grid-flow-col items-center">
         <FontAwesomeIcon icon={faComputer} />
         <p>

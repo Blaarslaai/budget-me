@@ -46,7 +46,7 @@ export default function Income() {
     debounceTimeout = setTimeout(async () => {
       get();
       setIsDeleting(false);
-    }, 2000);
+    }, 2500);
   };
 
   const get = async () => {
@@ -81,72 +81,78 @@ export default function Income() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold leading-7 text-gray-900">Income</h1>
+      <div className="w-full flex justify-center p-10 rounded-md">
+        <h1 className="text-3xl font-bold leading-7 text-gray-900">Income</h1>
+      </div>
 
-      <div className="collapse collapse-arrow bg-base-200">
+      <div className="collapse collapse-arrow bg-accent">
         <input type="checkbox" />
         <div className="collapse-title text-xl font-medium">
           Add Income Source
         </div>
         <div className="collapse-content">
           <form ref={formRef} action={create}>
-            <div className="flex gap-5">
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="label-text">Account</span>
-                </div>
-                <select
-                  className="select select-bordered w-full max-w-xs"
-                  name="account"
-                >
-                  {accounts.map((account: any) => (
-                    <option key={account.id} value={account.id}>
-                      {account.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="label-text">Income Source</span>
-                </div>
-                <select
-                  className="select select-bordered w-full max-w-xs"
-                  name="source"
-                >
-                  <option>Salary</option>
-                  <option>Rental Income</option>
-                  <option>Other</option>
-                </select>
-              </label>
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="label-text">Description</span>
-                </div>
-                <input
-                  type="text"
-                  name="description"
-                  placeholder="Type here"
-                  className="input input-bordered w-full max-w-xs"
-                />
-              </label>
-              <label className="form-control w-full max-w-xs">
-                <div className="label">
-                  <span className="label-text">Amount</span>
-                </div>
-                <input
-                  type="number"
-                  name="amount"
-                  defaultValue="0.00"
-                  step="0.01"
-                  className="input input-bordered w-full max-w-xs"
-                />
-              </label>
-            </div>
+            <div className="flex space-x-5">
+              <div className="flex gap-5">
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text">Account</span>
+                  </div>
+                  <select
+                    className="select select-bordered w-full max-w-xs"
+                    name="account"
+                  >
+                    {accounts.map((account: any) => (
+                      <option key={account.id} value={account.id}>
+                        {account.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text">Income Source</span>
+                  </div>
+                  <select
+                    className="select select-bordered w-full max-w-xs"
+                    name="source"
+                  >
+                    <option>Salary</option>
+                    <option>Rental Income</option>
+                    <option>Other</option>
+                  </select>
+                </label>
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text">Description</span>
+                  </div>
+                  <input
+                    type="text"
+                    name="description"
+                    placeholder="Type here"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text">Amount</span>
+                  </div>
+                  <input
+                    type="number"
+                    name="amount"
+                    defaultValue="0.00"
+                    step="0.01"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+              </div>
 
-            <button type="submit" className="btn btn-primary mt-5">
-              Submit
-            </button>
+              <div className="flex flex-col justify-end">
+                <button type="submit" className="btn btn-primary mt-5">
+                  Submit
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -158,6 +164,7 @@ export default function Income() {
               <th></th>
               <th>Account</th>
               <th>Income Source</th>
+              <th>Date</th>
               <th>Description</th>
               <th>Amount</th>
               <th></th>
@@ -175,6 +182,17 @@ export default function Income() {
                   }
                 </td>
                 <td>{source.incomesource}</td>
+                <td>
+                  {(source.date as Date).toLocaleString("en-ZA", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    // hour: "2-digit",
+                    // minute: "2-digit",
+                    // second: "2-digit",
+                    // hour12: false, // Set to true for 12-hour format
+                  })}
+                </td>
                 <td>{source.description}</td>
                 <td>{source.amount}</td>
                 <td>
@@ -193,6 +211,7 @@ export default function Income() {
               <th></th>
               <th>Account</th>
               <th>Income Source</th>
+              <th>Date</th>
               <th>Description</th>
               <th>Amount</th>
               <th></th>
